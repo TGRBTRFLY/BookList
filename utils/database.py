@@ -1,4 +1,4 @@
-import sqlite3
+from .database_connection import DatabaseConnection
 
 """
 Concerned wit storing an retrieving books from a database.
@@ -6,13 +6,10 @@ Concerned wit storing an retrieving books from a database.
 
 
 def create_book_table():
-    connection = sqlite3.connect('data.db')
-    cursor = connection.cursor()
+    with DatabaseConnection() as connection:
+        cursor = connection.cursor()
 
-    cursor.execute('CREATE TABLE IF NOT EXISTS books(title text, author text, read integer)')
-
-    connection.commit()
-    connection.close()
+        cursor.execute('CREATE TABLE IF NOT EXISTS books(title text, author text, read integer)')
 
 
 def add_book(title, author):
