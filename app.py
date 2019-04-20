@@ -44,13 +44,13 @@ def list_books():
 
 
 def prompt_read_book():
-    title = input('Enter the title of the book you just finished')
+    title = input('Enter the title of the book you just finished: ')
 
     database.mark_book_as_read(title)
 
 
 def prompt_delete_book():
-    title = input('Enter the title of the book you wish to delete')
+    title = input('Enter the title of the book you wish to delete: ')
 
     database.delete_book(title)
 

@@ -30,17 +30,28 @@ def get_all_books():
     cursor = connection.cursor()
 
     cursor.execute('SELECT * FROM books')
-    books = [{'title': row[0], 'author': row[1], cursor.fetchall()
+    books = [{'title': row[0], 'author': row[1], 'read': row[2]} for row in cursor.fetchall()]
 
-        connection.close()
+    connection.close()
+
+    return books
 
 
 def mark_book_as_read(title):
-    for book in books:
-        if book['title'] == title:
-            book['read'] = True
+    connection = sqlite3.connect('data.db')
+    cursor = connection.cursor()
+
+    cursor.execute('UPDATE books SET read=1 WHERE title=?', (title,))
+
+    connection.commit()
+    connection.close()
 
 
 def delete_book(title):
-    global books
-    books = [book for book in books if book['title'] != title]  # add each book to new list
+    connection = sqlite3.connect('data.db')
+    cursor = connection.cursor()
+
+    cursor.execute('DELETE FROM books WHERE title=?', (title,))
+
+    connection.commit()
+    connection.close()
